@@ -1,13 +1,17 @@
+'''
+Code Purpose:
+Author(s):
+Last Modified:
+'''
+#%%
 from astroquery.jplhorizons import Horizons
-from pygdsm import GlobalSkyModel
+from pygdsm import GlobalSkyModel # see Danny Price https://github.com/telegraphic/pygdsm/tree/master
 import matplotlib.pyplot as plt
 import numpy as np
 from astropy import units as u
 from astropy.coordinates import SkyCoord
 import healpy as hp
 
-
-# see Danny Price https://github.com/telegraphic/pygdsm/tree/master
 NSIDE = 512
 
 class Galaxy:
@@ -18,9 +22,9 @@ class Galaxy:
         self.idisplay = idisplay
 
     def gen_map_cube(self):
-        map_raw = self.gsm.generate(self.freqs)
+        map_raw = self.gsm.generate(self.freqs) 
         if self.fwhm is None:
-            self.map_cube = map_raw
+            self.map_cube = map_raw 
         else:
             self.map_cube = []
             for i in range(len(self.freqs)):
@@ -49,8 +53,7 @@ class Galaxy:
                 hp.visufunc.mollview(self.map_cube[self.idisplay])
 
 class Pointing:
-    def __init__(self, observer='Apollo-11 LRRR @ 301', target='399', flip=True, view=30.0,
-                 start='2027-07-01T00:00', stop='2027-07-30T23:59', step='240m'):
+    def __init__(self, observer='Apollo-11 LRRR @ 301', target='399', flip=True, view=30.0, start='2027-07-01T00:00', stop='2027-07-30T23:59', step='240m'):
         #observer = 'g: 180.0, -5.0, 0 @ 301'
         self.target = target
         self.epoch = {'start': start, 'stop': stop, 'step': step}
@@ -74,14 +77,15 @@ class Pointing:
         plt.plot(RA / 15.0, DEC, '.')
         plt.xlabel('RA [hr]')
         plt.ylabel('Dec [deg]')
+        plt.show()
 
-        self.lowview = SkyCoord(ra=np.array(RA)*u.degree, dec=(np.array(DEC) - view/2.0)*u.degree, frame='icrs')
+        # self.lowview = SkyCoord(ra=np.array(RA)*u.degree, dec=(np.array(DEC) - view/2.0)*u.degree, frame='icrs')
         self.midview = SkyCoord(ra=np.array(RA)*u.degree, dec=np.array(DEC)*u.degree, frame='icrs')
         self.hiview = SkyCoord(ra=np.array(RA)*u.degree, dec=(np.array(DEC) + view/2.0)*u.degree, frame='icrs')
 
-#observer = '500@301'
-#luna_class = Horizons(id=target, location=observer, epochs=epoch)
-#luna = luna_class.ephemerides()
+# observer = '500@301'
+# luna_class = Horizons(id=target, location=observer, epochs=epoch)
+# luna = luna_class.ephemerides()
 
 # plt.figure()
 # plt.plot(dt, apollo['RA'])

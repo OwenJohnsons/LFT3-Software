@@ -1,12 +1,20 @@
+'''
+Code Purpose:
+Author(s): 
+Last Modified:
+'''
+#%% 
 import numpy as np
 import matplotlib.pyplot as plt
 from copy import copy
 import lunar_sys
 import lunar_obs
+import healpy as hp
+from tqdm import tqdm
 
+# --- CLI Arguments --- 
 
 NSIDE = 512
-
 
 color_palette = [
     (0.12156862745098039, 0.4666666666666667, 0.7058823529411765, 1.0),
@@ -16,7 +24,6 @@ color_palette = [
     (0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0),
     (0.5490196078431373, 0.33725490196078434, 0.29411764705882354, 1.0)
         ]
-
 
 class Observe:
     def __init__(self, N=50, deck_diameter=3.0, element_low=400.0, array_low=None, start=300.0, stop=900, step=10):
@@ -76,7 +83,7 @@ class Observe:
         plt.figure('System')
         # plt.semilogy(self.system.freqs, self.system.Trcvr, linewidth=3, label='Trcvr')
         # plt.semilogy(self.system.freqs, self.system.Aeff, linewidth=3, label='Aeff')
-        for G in self.Gal:
+        for G in tqdm(self.Gal):
             plt.semilogy(self.system.freqs, G)
         plt.grid()
         plt.legend()

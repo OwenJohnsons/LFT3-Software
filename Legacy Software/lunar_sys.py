@@ -1,3 +1,8 @@
+'''
+Code Purpose:
+Author(s):
+Last Modified:
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -72,6 +77,7 @@ class System:
         plt.plot(self.freqs, self.Aeff)
         plt.xlabel('MHz')
         plt.ylabel(f'A$_e$ [m$^2$]')
+        plt.show()
 
     def gen_FWHM(self):
         self.fwhm = (300 / self.freqs) / self.deck_diameter
